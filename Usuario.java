@@ -7,6 +7,10 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario() {
+
+    }
+
     public String getNome() {
         return nome;
     }
@@ -15,19 +19,24 @@ public class Usuario {
         return senha;
     }
 
-    public void locar(Livro livro, Usuario usuario) {
-        if (livro.isDisponivel()) {
-            livro.setDisponivel(false);
-            System.out.println("Livro locado com sucesso [ " + livro.getTitulo() + " ]");
-        } else {
-            System.out.println("Livro indisponível usuário adicionado na fila de espera: [ " + usuario.getNome() + " ]");
-            livro.adicionarUsuarioFilaEspera(usuario);
+    public boolean logIn() {
+        if (this.nome.equals("admin") && this.senha.equals("admin")) {
+            return true;
         }
+        return false;
     }
 
     @Override
     public String toString() {
         return "Usuario [nome=" + nome + ", senha=" + senha + "]";
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }

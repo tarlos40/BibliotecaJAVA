@@ -18,8 +18,32 @@ public class Biblioteca {
 
     public void exibirCategoriasDisponiveis() {
         System.out.println("Categorias disponíveis na biblioteca:");
+        int count = 1;
         for (Categoria categoria : categorias) {
-            System.out.println("- " + categoria.getNome());
+            System.out.println(count + ": " + categoria.getNome());
+            count++;
         }
     }
+
+    public String getLivrosCategoria(int numero) {
+        String nomeCategoria = "";
+        int count = 1;
+
+        for (Categoria categoria : categorias) {
+
+            if (count == numero) {
+                nomeCategoria = categoria.getNome();
+
+                System.out.println("Os livros da categoria [ " + categoria.getNome() + " ] São os seguintes");
+                categoria.mostrarLivros();
+
+                return nomeCategoria;
+            }
+            count++;
+        }
+        nomeCategoria = "Categoria não existe";
+
+        return nomeCategoria;
+    }
+
 }

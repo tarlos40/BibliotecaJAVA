@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Categoria {
     private String nome;
     private List<Livro> livros;
@@ -29,5 +28,12 @@ public class Categoria {
                 ", livros=" + livros +
                 '}';
     }
-}
 
+    public void mostrarLivros (){
+        int count = 1;
+        for (Livro livro : livros) {
+            System.out.println(count + ": " + livro.getTitulo());
+            count++;
+        }
+    }
+}

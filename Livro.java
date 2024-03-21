@@ -16,7 +16,7 @@ public class Livro {
         return titulo;
     }
 
-    public Queue<Usuario> getFilaDeEspera(){
+    public Queue<Usuario> getFilaDeEspera() {
         return filaDeEspera;
     }
 
@@ -50,5 +50,16 @@ public class Livro {
                 ", disponivel=" + disponivel +
                 ", filaDeEspera=" + filaDeEspera +
                 '}';
+    }
+
+    public void locar(Livro livro, Usuario usuario) {
+        if (livro.isDisponivel()) {
+            livro.setDisponivel(false);
+            System.out.println("Livro locado com sucesso [ " + livro.getTitulo() + " ]");
+        } else {
+            System.out
+                    .println("Livro indisponível usuário adicionado na fila de espera: [ " + usuario.getNome() + " ]");
+            livro.adicionarUsuarioFilaEspera(usuario);
+        }
     }
 }

@@ -1,7 +1,10 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
-        
+        Scanner scanner = new Scanner(System.in);
+
         Usuario usuario1 = new Usuario("Carlos", "qwerty");
         Usuario usuario2 = new Usuario("Ana", "senha123");
         Usuario usuario3 = new Usuario("Pedro", "senha456");
@@ -12,6 +15,8 @@ public class Main {
         Usuario usuario8 = new Usuario("Camila", "senhaxyz");
         Usuario usuario9 = new Usuario("Rafael", "senha456");
         Usuario usuario10 = new Usuario("Isabela", "senha789");
+
+        Usuario usuarioPrincipal = new Usuario();
 
         Livro livro6 = new Livro("Crepúsculo");
         Livro livro7 = new Livro("O Código Da Vinci");
@@ -28,7 +33,6 @@ public class Main {
         Categoria romance = new Categoria("Romance");
         Categoria suspense = new Categoria("Suspense");
         Categoria autoajuda = new Categoria("Autoajuda");
-
 
         biblioteca.adicionarCategoria(autoajuda);
         biblioteca.adicionarCategoria(romance);
@@ -60,9 +64,6 @@ public class Main {
         livro14.setDisponivel(false);
         livro15.setDisponivel(true);
 
-        usuario10.locar(livro15, usuario10);
-        usuario7.locar(livro9, usuario10);
-
         livro9.adicionarUsuarioFilaEspera(usuario1);
         livro9.adicionarUsuarioFilaEspera(usuario2);
         livro9.adicionarUsuarioFilaEspera(usuario3);
@@ -73,46 +74,50 @@ public class Main {
         livro10.adicionarUsuarioFilaEspera(usuario8);
         livro10.adicionarUsuarioFilaEspera(usuario9);
 
-        // Exibindo livros disponíveis na categoria de Romance
-        System.out.println("Livros disponíveis na categoria Romance:");
-        for (Livro livro : romance.getLivros()) {
-            if (livro.isDisponivel()) {
-                System.out.println("- " + livro.getTitulo());
+        boolean continuar = true;
+        boolean logado = false;
+        int resposta = 0;
+
+        // As credenciais de login são admin, admin
+
+        do {
+            System.out.println("Digite seu nome de usuário");
+            usuarioPrincipal.setNome(scanner.next());
+
+            System.out.println("Digite sua senha");
+            usuarioPrincipal.setSenha(scanner.next());
+
+            logado = usuarioPrincipal.logIn();
+
+            if (!logado) {
+                System.out.println("Usuario ou senha incorretos tente novamente");
             }
-        }
 
-        // Exibindo usuários na fila de espera
-        System.out.println("Usuários na fila de espera do livro: " + livro9.getTitulo());
-        for (Usuario usuario : livro9.getFilaDeEspera()) {
-            System.out.println("- " + usuario.getNome());
-        }
+        } while (logado == false);
 
-        System.out.println("Usuários na fila de espera do livro" + livro10.getTitulo());
-        for (Usuario usuario : livro10.getFilaDeEspera()) {
-            System.out.println("- " + usuario.getNome());
-        }       
+        do {
+            System.out.println("------ Menu ------");
+            System.out.println("1: Locar livro");
+            System.out.println("2: Devolver livro");
+            System.out.println("3: Consultar livro");
+            System.out.println("4: Sair");
+            resposta = scanner.nextInt();
 
-        System.out.println("\nLivros de cada Categoria");
+            if (resposta == 1) {
+                biblioteca.exibirCategoriasDisponiveis();
+                System.out.println("Digite o número da categoria em que quer explorar");
+                resposta = scanner.nextInt();
 
-        System.out.println("Romance");
-        for (Livro livro : romance.getLivros()) {
-            System.out.println(livro.getTitulo());
-        }
-        System.out.println("-----------------");
+                biblioteca.getLivrosCategoria(resposta);
 
-        System.out.println("Suspense");
-        for (Livro livro : suspense.getLivros()) {
-            System.out.println(livro.getTitulo());
-        }
-        System.out.println("-----------------");
+                System.out.println("Qual livro deseja locar ?");
+                resposta = scanner.nextInt();
+            }
 
-        System.out.println("Auto Ajuda");
-        for (Livro livro : autoajuda.getLivros()) {
-            System.out.println(livro.getTitulo());
-        }
-        System.out.println("-----------------");
+            if (resposta == 4)
+                continuar = false;
 
-        System.out.println("Aqui estão todas as categorias disponíveis");
-        biblioteca.exibirCategoriasDisponiveis();
+        } while (continuar == true);
+
     }
 }
