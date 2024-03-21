@@ -1,9 +1,25 @@
+
+import front.LoginFrame;
 import java.util.Scanner;
+
+import javax.swing.SwingUtilities;
+
+import back.Biblioteca;
+import back.Categoria;
+import back.Livro;
+import back.Usuario;
 
 public class Main {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
         Scanner scanner = new Scanner(System.in);
+
+         SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                LoginFrame frame = new LoginFrame();
+                frame.setVisible(true);
+            }
+        });
 
         Usuario usuario1 = new Usuario("Carlos", "qwerty");
         Usuario usuario2 = new Usuario("Ana", "senha123");
